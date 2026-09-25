@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy 19th, My Person 🎂</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,500&family=Caveat:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#221327;
+    --bg2:#2e1b35;
+    --bg3:#3a2340;
+    --cream:#f7ece0;
+    --gold:#e8b75e;
+    --rose:#e6a1af;
+    --muted:#c9b8ce;
+    color-scheme: dark;
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top: env(safe-area-inset-top, 0px); height:100%;}
+  body{
+    margin:0; height:100%;
+    background: radial-gradient(ellipse at 20% 10%, #3a2044 0%, var(--bg) 45%, #180c1c 100%);
+    color:var(--cream);
+    font-family:'Nunito', sans-serif;
+    overflow:hidden;
+  }
+  .bokeh{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;}
+  .bokeh span{position:absolute; border-radius:50%; filter:blur(2px); opacity:.35;
+    background: radial-gradient(circle at 35% 35%, var(--gold), transparent 70%);
+    animation: drift 14s ease-in-out infinite alternate;}
+  .bokeh span:nth-child(1){width:90px;height:90px; top:8%; left:10%; animation-delay:0s;}
+  .bokeh span:nth-child(2){width:50px;height:50px; top:70%; left:80%; background:radial-gradient(circle at 35% 35%, var(--rose), transparent 70%); animation-delay:2s;}
+  .bokeh span:nth-child(3){width:120px;height:120px; top:60%; left:6%; animation-delay:4s;}
+  .bokeh span:nth-child(4){width:60px;height:60px; top:15%; left:85%; background:radial-gradient(circle at 35% 35%, var(--rose), transparent 70%); animation-delay:6s;}
+  .bokeh span:nth-child(5){width:40px;height:40px; top:40%; left:50%; animation-delay:1s;}
+  @keyframes drift{ to { transform: translateY(-30px) translateX(15px); } }
+
+  .stage{position:relative; height:100dvh; width:100%; z-index:1;}
+  .page{
+    position:absolute; inset:0; overflow-y:auto; overflow-x:hidden;
+    display:flex; flex-direction:column; align-items:center;
+    padding: calc(env(safe-area-inset-top,0px) + 32px) 20px calc(env(safe-area-inset-bottom,0px) + 60px);
+    opacity:0; visibility:hidden; transform:translateY(24px);
+    transition: opacity .6s ease, transform .6s ease, visibility 0s linear .6s;
+  }
+  .page.active{ opacity:1; visibility:visible; transform:translateY(0); transition: opacity .6s ease, transform .6s ease; }
+
+  h1,h2{font-family:'Fraunces', serif; font-weight:600; margin:0;}
+  .script{font-family:'Caveat', cursive; color:var(--gold); font-weight:700;}
+
+  /* ---- PAGE 1: cake ---- */
+  #page1{justify-content:center; text-align:center; gap:26px;}
+  .eyebrow{font-family:'Caveat', cursive; font-size:1.5rem; color:var(--rose);}
+  .cake-wrap{display:flex; flex-direction:column; align-items:center; cursor:default;}
+  .plate{width:220px; height:16px; background:linear-gradient(180deg,#4a2c52,#2e1b35); border-radius:50%; margin-top:6px; box-shadow:0 12px 26px rgba(0,0,0,.5);}
+  .tiers{display:flex; flex-direction:column-reverse; align-items:center;}
+  .tier{border-radius:14px 14px 6px 6px; position:relative;}
+  .tier.b1{width:210px;height:56px; background:linear-gradient(180deg,#c98a63,#a86a48);}
+  .tier.b2{width:170px;height:48px; background:linear-gradient(180deg,#e3b7d8,#cf95c5); margin-bottom:-6px;}
+  .tier.b3{width:130px;height:40px; background:linear-gradient(180deg,var(--rose),#d47f92); margin-bottom:-6px;}
+  .candles{display:flex; gap:16px; margin-bottom:2px; z-index:2;}
+  .candle{width:8px; height:34px; background:linear-gradient(180deg,#f7ece0,#d8c7b4); border-radius:3px; position:relative; cursor:pointer;}
+  .candle .flame{position:absolute; top:-20px; left:50%; transform:translateX(-50%); width:12px; height:20px;
+    background: radial-gradient(circle at 50% 30%, #fff6d8 0%, var(--gold) 45%, #d9691f 100%);
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flicker 1.6s ease-in-out infinite alternate;
+    transition: opacity .4s, transform .4s;
+  }
+  @keyframes flicker{ 0%{transform:translateX(-50%) scale(1) rotate(-2deg);} 100%{transform:translateX(-50%) scale(1.12) rotate(2deg);} }
+  .candle.blown .flame{opacity:0; transform:translateX(-50%) scale(.3) translateY(6px);}
+  .candle .smoke{position:absolute; top:-22px; left:50%; width:4px; height:4px; border-radius:50%; background:rgba(230,220,225,.6); opacity:0;}
+  .candle.blown .smoke{animation: puff 1.1s ease-out forwards;}
+  @keyframes puff{ 0%{opacity:.7; transform:translate(-50%,0) scale(1);} 100%{opacity:0; transform:translate(-50%,-34px) scale(4);} }
+
+  .hint{color:var(--muted); font-size:.95rem;}
+  .wish-reveal{opacity:0; max-height:0; overflow:hidden; transition:opacity .7s ease, max-height .7s ease; display:flex; flex-direction:column; align-items:center; gap:16px;}
+  .wish-reveal.show{opacity:1; max-height:260px; margin-top:4px;}
+
+  .btn{
+    font-family:'Nunito', sans-serif; font-weight:700; font-size:1rem; letter-spacing:.2px;
+    color:#2e1b35; background:linear-gradient(135deg, var(--gold), #f1cd8a);
+    border:none; padding:13px 30px; border-radius:30px; cursor:pointer;
+    box-shadow:0 8px 20px rgba(232,183,94,.35);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(232,183,94,.45);}
+  .btn.ghost{background:transparent; color:var(--muted); box-shadow:none; padding:10px 18px; font-weight:600;}
+
+  /* ---- PAGE 2: letter ---- */
+  #page2{align-items:center; gap:6px;}
+  .letter-head{text-align:center; margin-bottom:6px; max-width:520px;}
+  .letter-head h1{font-size:clamp(2.1rem,7vw,2.8rem); color:var(--cream);}
+  .letter-head .script{font-size:clamp(1.4rem,5vw,1.8rem); display:block; margin-top:6px;}
+
+  .entries{max-width:640px; width:100%; display:flex; flex-direction:column; gap:38px; margin-top:20px;}
+  .entry{display:flex; gap:20px; align-items:center;}
+  .entry.reverse{flex-direction:row-reverse;}
+  .entry .txt{flex:1; min-width:0;}
+  .entry h2{font-size:1.3rem; color:var(--rose); font-style:italic; margin-bottom:8px;}
+  .entry p{margin:0; line-height:1.65; color:var(--cream); font-size:1rem;}
+  .polaroid{
+    flex-shrink:0; width:132px; background:#fdfaf5; padding:8px 8px 20px; border-radius:4px;
+    box-shadow:0 10px 22px rgba(0,0,0,.45); transform:rotate(var(--r,-4deg));
+  }
+  .polaroid img{width:100%; display:block; border-radius:2px; aspect-ratio:1/1.1; object-fit:cover; background:#ccc;}
+  .entry:nth-child(odd) .polaroid{--r:-5deg;}
+  .entry:nth-child(even) .polaroid{--r:4deg;}
+  
+  .no-photo{max-width:640px; text-align:center; padding: 20px 0;}
+  .no-photo p{color:var(--cream); line-height:1.65;}
+  .continue-wrap{margin-top:36px; margin-bottom:10px; display:flex; flex-direction:column; align-items:center; gap:10px;}
+
+  /* ---- PAGE 3: closing ---- */
+  #page3{justify-content:center; text-align:center; gap:18px;}
+  .closing-photo{width:190px; background:#fdfaf5; padding:10px 10px 26px; border-radius:4px; box-shadow:0 14px 30px rgba(0,0,0,.5); transform:rotate(-3deg); margin-bottom:6px;}
+  .closing-photo img{width:100%; border-radius:2px; display:block; aspect-ratio:1/1.2; object-fit:cover; background:#ccc;}
+  #page3 h1{font-size:clamp(2rem,8vw,2.6rem);}
+  #page3 .script.big{font-size:clamp(2rem,9vw,2.8rem); line-height:1.1;}
+  .closing-text{max-width:480px; color:var(--cream); line-height:1.7; font-size:1.02rem;}
+  .sign{margin-top:6px; font-family:'Caveat',cursive; font-size:1.7rem; color:var(--gold);}
+  .backlink{position:fixed; top:calc(env(safe-area-inset-top,0px) + 14px); left:16px; z-index:5;}
+
+</style>
+</head>
+<body>
+
+<div class="bokeh"><span></span><span></span><span></span><span></span><span></span></div>
+
+<div class="stage">
+
+  <!-- PAGE 1: Birthday Cake -->
+  <section class="page active" id="page1">
+    <div class="eyebrow">a little something for you 🎀</div>
+    <h1 style="font-size:clamp(1.6rem,6vw,2.2rem)">Before you read anything...</h1>
+    <p class="hint">tap each candle to blow it out 🕯️</p>
+
+    <div class="cake-wrap">
+      <div class="candles" id="candles">
+        <div class="candle" data-i="1"><div class="flame"></div><div class="smoke"></div></div>
+        <div class="candle" data-i="2"><div class="flame"></div><div class="smoke"></div></div>
+        <div class="candle" data-i="3"><div class="flame"></div><div class="smoke"></div></div>
+        <div class="candle" data-i="4"><div class="flame"></div><div class="smoke"></div></div>
+        <div class="candle" data-i="5"><div class="flame"></div><div class="smoke"></div></div>
+      </div>
+      <div class="tiers">
+        <div class="tier b1"></div>
+        <div class="tier b2"></div>
+        <div class="tier b3"></div>
+      </div>
+      <div class="plate"></div>
+    </div>
+
+    <div class="wish-reveal" id="wishReveal">
+      <div class="script" style="font-size:2rem;">Happy 19th 🎉 make a wish, gorgeous ✨</div>
+      <button class="btn" id="toPage2">Open your letter</button>
+    </div>
+  </section>
+
+  <!-- PAGE 2: The Letter -->
+  <section class="page" id="page2">
+    <button class="btn ghost backlink" id="backToPage1">Back</button>
+    <div class="letter-head">
+      <h1>Happy Happy Birthday</h1>
+      <span class="script">to my prettiest girl 💗 happy 19, my love</span>
+    </div>
+
+    <div class="entries">
+      
+      <!-- Photo 1: Pink Outfit -->
+      <div class="entry">
+        <div class="polaroid"><img src="WhatsApp Image 2026-09-25 at 9.26.38 PM (1).jpeg" alt="Pink outfit mirror selfie"></div>
+        <div class="txt">
+          <h2>your biggest fan since forever</h2>
+          <p>From a very young age I've been a fan of you — your smile 🤌, your dance, your grace ✨, your absolute everything. I still don't think you know how special you are.</p>
+        </div>
+      </div>
+
+      <!-- Photo 2: School Stage -->
+      <div class="entry reverse">
+        <div class="polaroid"><img src="WhatsApp Image 2026-09-25 at 9.26.38 PM (3).jpeg" alt="School stage dance memory"></div>
+        <div class="txt">
+          <h2>lunch table wars</h2>
+          <p>I remember fighting with Dedeepya just to sit next to you at lunch 😂. I miss those days — sitting together the whole day and still wishing it was longer, gossiping in the corridors, dancing, going to tuition together.</p>
+        </div>
+      </div>
+
+      <!-- Text Break -->
+      <div class="no-photo">
+        <h2 style="text-align:center; color:var(--rose);">the k-drama addict you created</h2>
+        <p>You literallyyyy turned me into someone who cannot stop watching k-dramas. I blame you fully and I'm not even sorry about it 😭📺</p>
+      </div>
+
+      <!-- Photo 3: Dancing outside -->
+      <div class="entry">
+        <div class="polaroid"><img src="WhatsApp Image 2026-09-25 at 9.26.38 PM (2).jpeg" alt="Dancing at night event"></div>
+        <div class="txt">
+          <h2>always the life of the party</h2>
+          <p>Seeing you so happy and carefree is my absolute favorite thing. You light up every room (and every dance floor) you step onto. Never lose that beautiful spark! ✨</p>
+        </div>
+      </div>
+
+      <!-- Photo 4: Forest/Temple Trip -->
+      <div class="entry reverse">
+        <div class="polaroid"><img src="WhatsApp Image 2026-09-25 at 9.26.50 PM.jpeg" alt="Forest trip"></div>
+        <div class="txt">
+          <h2>to more adventures</h2>
+          <p>Whether we're exploring new places or just hanging out doing absolutely nothing, any time spent with you is a core memory. Here's to a hundred more trips together 🌲❤️</p>
+        </div>
+      </div>
+
+      <div class="continue-wrap">
+        <button class="btn" id="toPage3">Continue reading...</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PAGE 3: Closing & Final Photo -->
+  <section class="page" id="page3">
+    <button class="btn ghost backlink" id="backToPage2">Back</button>
+    
+    <!-- Photo 5: Selfie together -->
+    <div class="closing-photo">
+      <img src="WhatsApp Image 2026-09-25 at 9.26.38 PM.jpeg" alt="Selfie together">
+    </div>
+    
+    <h1>us against the world</h1>
+    <span class="script big">Thank you for being my person.</span>
+    
+    <p class="closing-text">
+      Through all the phases, the laughs, and the chaos, I wouldn't trade our bond for anything. 
+      I am so grateful to have you by my side. I hope your 19th birthday is as wonderful, beautiful, 
+      and unforgettable as you are. Enjoy your day today! 🎉💕
+    </p>
+    
+    <div class="sign">love you always ✨</div>
+  </section>
+
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const candles = document.querySelectorAll(".candle");
+    const wishReveal = document.getElementById("wishReveal");
+    let blownCount = 0;
+
+    // 1. Candle click logic
+    candles.forEach(candle => {
+      candle.addEventListener("click", function() {
+        if (!this.classList.contains("blown")) {
+          this.classList.add("blown");
+          blownCount++;
+          
+          if (blownCount === candles.length) {
+            setTimeout(() => {
+              wishReveal.classList.add("show");
+            }, 600); 
+          }
+        }
+      });
+    });
+
+    // 2. Page navigation logic
+    const page1 = document.getElementById("page1");
+    const page2 = document.getElementById("page2");
+    const page3 = document.getElementById("page3");
+
+    const toPage2Btn = document.getElementById("toPage2");
+    const toPage3Btn = document.getElementById("toPage3");
+    
+    const backToPage1Btn = document.getElementById("backToPage1");
+    const backToPage2Btn = document.getElementById("backToPage2");
+
+    // Forward Navigation
+    if (toPage2Btn) {
+      toPage2Btn.addEventListener("click", () => {
+        page1.classList.remove("active");
+        page2.classList.add("active");
+        page2.scrollTo(0, 0); // Reset scroll to top
+      });
+    }
+
+    if (toPage3Btn) {
+      toPage3Btn.addEventListener("click", () => {
+        page2.classList.remove("active");
+        page3.classList.add("active");
+        page3.scrollTo(0, 0); // Reset scroll to top
+      });
+    }
+
+    // Backward Navigation
+    if (backToPage1Btn) {
+      backToPage1Btn.addEventListener("click", () => {
+        page2.classList.remove("active");
+        page1.classList.add("active");
+      });
+    }
+
+    if (backToPage2Btn) {
+      backToPage2Btn.addEventListener("click", () => {
+        page3.classList.remove("active");
+        page2.classList.add("active");
+      });
+    }
+  });
+</script>
+</body>
+</html>
